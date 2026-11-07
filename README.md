@@ -147,8 +147,4 @@ Public references: [1Click catalog](https://docs.near-intents.org/api-reference/
 
 ## Integration-window commits: 2026-10-19 through 2026-11-14
 
-Maintainer placeholder. Add actual public-repository commits with dates and the NEAR-specific change after the publication workflow is approved. Do not backdate commits or copy private repository history.
-
-| Date | Public commit | NEAR integration change |
-|---|---|---|
-| To be completed by maintainer | — | — |
+This repository was first published on 2026-11-07, so its whole history is inside the hackathon window. Commits are not backdated and private repository history is not copied; see `git log --date=short`.
