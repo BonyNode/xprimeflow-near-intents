@@ -1,0 +1,18 @@
+{
+  "name": "xprimeflow-near-intents",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Catalog-bound NEAR deposit previews and dry multi-network quote comparisons",
+  "type": "module",
+  "engines": { "node": ">=20.19.0" },
+  "license": "SEE LICENSE IN NOTICE",
+  "exports": "./src/index.js",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "demo": "node demo/server.mjs"
+  },
+  "dependencies": {
+    "@noble/curves": "2.4.0",
+    "@noble/hashes": "2.4.0"
+  }
+}

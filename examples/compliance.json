@@ -1,0 +1,7 @@
+{
+  "description": "Demonstration policy only. GB is excluded by default; this is not a sanctions dataset or geolocation service.",
+  "blockedRegions": ["GB"],
+  "blockedAddresses": [
+    { "blockchain": "near", "address": "blocked.demo.invalid" }
+  ]
+}

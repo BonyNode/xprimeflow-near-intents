@@ -1,0 +1,27 @@
+X PrimeFlow NEAR Intents
+Copyright 2026 The BonyNode Authors
+
+This project is not affiliated with, endorsed by, or officially connected with
+NEAR Foundation, NEAR Intents, Defuse, Intents Technology Limited, or the
+operators of the 1Click service.
+Third-party names and marks belong to their owners and are not licensed by
+this repository.
+
+Project source code, documentation, and authored test fixtures are licensed
+under the Apache License, Version 2.0 (see LICENSE).
+Public token identifiers and recorded numerical quote fields are included
+for technical verification; no exclusive rights are claimed in those facts.
+The fixture provenance and synthetic substitutions are described in
+test/fixtures/provenance.json. They contain no user transaction records.
+
+Installed third-party dependencies retain their respective licenses:
+@noble/curves and @noble/hashes: MIT, copyright Paul Miller and contributors.
+Their license texts are distributed with their npm packages.
+
+The optional examples/near-wallet.js adapter references @hot-labs/near-connect
+0.12.0. Its published package.json declares MIT and author HOT Labs:
+https://github.com/azbang/near-connect/blob/main/package.json
+No near-connect implementation or bundle is redistributed in this repository.
+Install it separately for wallet integration and retain the upstream license
+notices when redistributing a bundle that includes it. The example adapter
+itself is newly authored project code covered by the Apache-2.0 LICENSE.

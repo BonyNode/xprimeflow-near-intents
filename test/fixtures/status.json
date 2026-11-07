@@ -1,0 +1,6 @@
+{
+  "status": "PROCESSING",
+  "updatedAt": "2026-11-07T12:01:00.000Z",
+  "quoteResponse": { "quote": { "depositAddress": "deposit.demo.invalid", "depositMemo": "demo-memo" } },
+  "swapDetails": { "originChainTxHashes": [] }
+}

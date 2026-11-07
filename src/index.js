@@ -1,0 +1,11 @@
+export { createClient } from './client.js';
+export { buildNearDeposit } from './near-deposit.js';
+export { createLocalCompliance } from './compliance.js';
+export { normalizeAddress, checksumEvmAddress, isNearAccountId, SUPPORTED_NETWORKS } from './addresses.js';
+export { normalizeStatus } from './status.js';
+export { parseUnits, formatUnits } from './amounts.js';
+export { IntentsError, publicError } from './errors.js';
+export { nearAccount, validAssetId, swapAnySide, catalogSides, NEAR_NATIVE, STORAGE_LIMIT } from './swap-policy.js';
+export { assertShownSelection, assertSwapAnyDeposit, assertShownDeal, nearDeposit } from './deal.js';
+export { createDepositAttempt } from './attempt.js';
+export { compareCheapest, multiChainSymbols } from './cheapest.js';

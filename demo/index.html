@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>X PrimeFlow · NEAR Intents quote demo</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+  <script type="module" src="/compare.js"></script>
+</head>
+<body>
+  <main>
+    <header><a class="brand" href="/">X PrimeFlow <span>/ NEAR Intents</span></a><span id="mode" class="badge">Loading</span></header>
+    <section class="intro"><p class="eyebrow">NEAR INTENTS · A + B</p><h1>Choose a token.<br>Compare where it costs less.</h1><p>Explore a catalog route, inspect unsigned NEAR actions, and compare output across networks. Every quote is dry. This demo never signs or sends a transaction.</p><nav aria-label="Demo sections"><a href="#quote-form">A · Any token</a> · <a href="#comparison">B · Where is it cheaper?</a></nav></section>
+    <p id="context" class="notice" role="status">Loading the asset catalog…</p>
+    <div class="workspace">
+      <form id="quote-form" class="card">
+        <h2>A · Any token</h2>
+        <div class="pair"><label>From network<select id="from-network" required></select></label><label>From asset<select id="from-asset" required></select></label></div>
+        <div class="pair"><label>To network<select id="to-network" required></select></label><label>To asset<select id="to-asset" required></select></label></div>
+        <label>Amount in source tokens<input id="amount" value="1" inputmode="decimal" required autocomplete="off"></label>
+        <label>Refund address on source network<input id="refund" value="quote.demo.invalid" required autocomplete="off" spellcheck="false"></label>
+        <label>Recipient on destination network<input id="recipient" value="0x52908400098527886E0F7030069857D2E4169EE7" required autocomplete="off" spellcheck="false"></label>
+        <div class="pair"><label>Slippage (basis points)<input id="slippage" type="number" min="0" max="10000" step="1" value="100" required></label><label>Region (ISO code)<input id="region" value="DE" pattern="[A-Za-z]{2}" maxlength="2" required autocomplete="off"></label></div>
+        <p class="hint">100 bps = 1%. Region and address checks use a local example policy. GB is excluded; this is not live geolocation or sanctions screening.</p>
+        <button id="submit" type="submit" disabled>Get dry quote</button>
+        <p id="error" role="alert"></p>
+      </form>
+      <section class="card results" aria-labelledby="result-title">
+        <div class="section-head"><h2 id="result-title">Route preview</h2><span class="badge quiet">DRY ONLY</span></div>
+        <p id="empty">Select a route and request a quote. Nothing will be sent.</p>
+        <div id="result" hidden>
+          <dl><div><dt>Estimated output</dt><dd id="output"></dd></div><div><dt>Minimum output</dt><dd id="minimum"></dd></div><div><dt>Estimated route time</dt><dd id="time"></dd></div><div><dt>App fee reported in quote</dt><dd id="app-fee"></dd></div><div><dt>Withdraw fee · raw provider field</dt><dd id="withdraw"></dd></div><div><dt>Refund fee · raw provider field</dt><dd id="refund-fee"></dd></div></dl>
+          <p id="catalog-match" class="notice"></p><p class="hint">Fee fields are not a total fee calculation. Quotes are estimates; no liquidity is reserved.</p>
+          <h3>Unsigned NEAR actions</h3><p id="preview-note" class="hint"></p><pre id="preview"></pre>
+          <details><summary>Validated quote data</summary><pre id="raw"></pre></details>
+        </div>
+      </section>
+    </div>
+    <section id="comparison" class="card comparison" aria-labelledby="compare-title">
+      <h2 id="compare-title">B · Where is it cheaper?</h2><p>Use the source, amount, refund address and region from A. Compare the same target symbol on different networks.</p>
+      <form id="compare-form"><label>Target symbol<select id="compare-symbol" required></select></label>
+        <fieldset><legend>Wallet addresses for destination networks</legend><p class="hint">Enter your address on each network you want to compare. Empty field = no quote request for that network. The source address comes from A. This demo does not verify ownership.</p><div id="wallet-fields" class="pair"></div></fieldset>
+        <button id="compare-submit" disabled>Compare dry quotes</button><p id="compare-error" role="alert"></p>
+      </form>
+      <div id="comparison-result" hidden><p id="best" role="status"></p><div class="table-scroll" tabindex="0" aria-label="Network quote comparison"><table><thead><tr><th>Network / asset</th><th>You receive</th><th>Network price · USD</th><th>Route difference · USD</th><th>Effective USD / token</th><th>Use route</th></tr></thead><tbody id="comparison-rows"></tbody></table></div><p class="hint">Ranked by exact token output for the same input. Route difference = provider USD input − USD output; it is not a measured gas bill. Matching symbols do not guarantee identical contracts. “Use route in A” fills the form and sends nothing.</p></div>
+    </section>
+    <footer>Independent demonstration · Not affiliated with NEAR Foundation, NEAR Intents, or Defuse · Apache-2.0</footer>
+  </main>
+</body>
+</html>

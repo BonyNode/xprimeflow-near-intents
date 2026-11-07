@@ -1,0 +1,20 @@
+{
+  "quote": {
+    "source": "Anonymous dry POST https://1click.chaindefuser.com/v0/quote",
+    "capturedAt": "2026-11-07T15:12:05.745Z",
+    "route": "1 wNEAR on NEAR to USDC on Base",
+    "retainedFields": [
+      "amountIn",
+      "amountOut",
+      "minAmountOut",
+      "timeEstimate",
+      "refundFee",
+      "withdrawFee",
+      "appFeeBps"
+    ],
+    "adaptations": "Echo uses fixed deadline and synthetic refund/fee accounts; recipient is a public EIP-55 test vector. No signatures, deposit addresses, request IDs, or real user data retained."
+  },
+  "tokens": "Curated public token identifiers using the documented response schema; price and coingeckoId are deliberate synthetic discard-field probes. Missing contractAddress is deliberate.",
+  "status": "Synthetic state and deposit placeholder; no real transfer occurred.",
+  "comparison": "All comparison USD values and non-Base outputs are synthetic offline examples, not observations of market prices. Arbitrum USDC uses a public contract identifier. Polygon and BSC rows use invented repeated-digit contracts / fixture.invalid solely to exercise 1cs_v1 and nep245 schemas."
+}
