@@ -139,7 +139,7 @@ Offline node:test coverage includes transport limits, cache expiry, echo mismatc
 
 The dependencies are pinned **@noble/hashes 2.4.0** (Keccak/EIP-55) and **@noble/curves 2.4.0** (Ed25519/Solana), both MIT. Node supplies the server, fetch and test runner. Optional near-connect is not installed or bundled by this package.
 
-All project modules, demo code, examples, tests and documentation were newly authored with **OpenAI Codex assistance**. General integration rules were reimplemented as standalone modules; private service implementations, databases, endpoints, user records and internal price catalogs were not copied. External dependency code retains its authorship. The Apache-2.0 license text is standard, not AI-authored.
+All project modules, demo code, examples, tests and documentation were newly authored with AI coding assistants: **OpenAI Codex** wrote this standalone package, and the integration rules it reimplements were developed with **Anthropic Claude (Claude Code)** in the X PrimeFlow codebase. General integration rules were reimplemented as standalone modules; private service implementations, databases, endpoints, user records and internal price catalogs were not copied. External dependency code retains its authorship. The Apache-2.0 license text is standard, not AI-authored.
 
 `test/fixtures/provenance.json` distinguishes the recorded Base quote quantity from synthetic comparison values. `.invalid` accounts, repeated-digit addresses, status records and claim IDs are fixtures. Public token contract identifiers and EIP-55/Solana specification vectors are not owner wallet data.
 
