@@ -1,5 +1,7 @@
 # X PrimeFlow NEAR Intents
 
+**The problem:** a user who wants a token on another network has to pick a route without seeing, before anything is signed, which network returns the most for the same input, or exactly what the wallet will be asked to send. This module answers both questions with dry NEAR Intents quotes and an unsigned deposit preview.
+
 A standalone Node.js module and local demo for two NEAR Intents flows:
 
 - **A — any-token route:** select catalog assets, validate the selected identity and exact amount, and inspect an unsigned NEAR deposit.
@@ -17,7 +19,7 @@ npm test
 node demo/server.mjs
 ```
 
-You should see tests pass, with the live test skipped, followed by `Quote demo (fixture): http://127.0.0.1:8787`. Open that address. The server listens only on loopback. Stop it with Ctrl+C.
+You should see tests pass, with the live test skipped, followed by `Quote demo (fixture): http://127.0.0.1:8787`. Open that address. The server listens only on loopback. Stop it with Ctrl+C. Offline fixture mode replays only 1 NEAR/wNEAR → USDC at 100 bps slippage: other amounts, tokens or slippages return "Check the input format and limits." in A or "unavailable" in B; use `DEMO_MODE=live` for arbitrary dry quotes.
 
 ## A: do this — see this
 
@@ -25,11 +27,11 @@ You should see tests pass, with the live test skipped, followed by `Quote demo (
 2. You see **3.666345 USDC**, minimum **3.629681 USDC**, and **24 seconds**. The quote is `dry: true`; `depositAddress` is null. These are saved fixture quantities, not current prices.
 3. The catalog-match message confirms **mode + assetId + decimals + denomination + exact input**. The preview has **one Transfer**, amount `1000000000000000000000000`, to the illustrative `deposit.demo.invalid`. Never send to that placeholder.
 4. Change the source asset to **wNEAR**, then request again. You see **two FunctionCall actions**: `storage_deposit(account_id, registration_only: true)` followed by `ft_transfer` with **1 yoctoNEAR**. This spends an existing wNEAR balance; it does not wrap native NEAR.
-5. Change region to **GB** and request again. You see the local region-policy refusal. Set DE again to continue.
+5. Change region to **GB** and request again. You see the local region-policy refusal. Set region back to **DE** and the source asset back to **NEAR · native transfer** to continue.
 
 Native NEAR uses the catalog identity `nep141:wrap.near` plus the source-only denomination `near-native`. [1Click handles wrapping](https://docs.near-intents.org/integration/verifier-contract/deposits-and-withdrawals/near-token). Destination wNEAR remains labelled wNEAR; a refund of native NEAR may arrive as wNEAR. Real deposits/refunds have not been verified by this demo.
 
-Run the same A example without a browser:
+In a second terminal, while `node demo/server.mjs` is still running, run the same A example without a browser:
 
 ```sh
 curl --fail-with-body http://127.0.0.1:8787/api/quote \
@@ -52,7 +54,7 @@ Expect three unsigned JSON examples: native NEAR has **one Transfer**; existing 
 3. You see **Arbitrum: 3.7 USDC**, **Base: 3.666345 USDC**, **NEAR: 3.6 USDC**, then **Polygon: Add wallet address**, with no quote numbers for Polygon. No request is made for a network without an address.
 4. Arbitrum is first because its token output is largest. Its route difference is **0.3 USD**: synthetic USD input **4** minus output **3.7**. Base's difference is **0.333655 USD**. These are demonstration values, not market observations or measured gas charges.
 5. The Base and Arbitrum network prices are labelled **provided input**. NEAR's price is labelled **1Click quote**. The module has no private price feeds; a caller may provide a `networkPrice(row)` function.
-6. Click Arbitrum's **Use route in A**. A's destination becomes Arbitrum USDC with the entered address. **No quote or send happens on that click.** Click Get dry quote yourself to see the selected route.
+6. Click Arbitrum's **Use route in A**. A's destination becomes Arbitrum USDC with the entered address. **No quote or send happens on that click.** Click Get dry quote yourself to see the selected route. Changing a network dropdown in A by hand clears its address field; reload the page, or click **Use route in A** again, to restore the example address.
 7. Clear Arbitrum's address and compare again. Its row says Add wallet address; Base becomes the best quoted route. No address is fabricated to keep a row priced.
 
 Symbols are candidate search terms, not asset identities. Expand **Asset ID** to inspect each contract. A matching symbol does not prove equivalent token backing, trust, liquidity, or redeemability.
@@ -79,7 +81,7 @@ To use the live catalog in the UI, stop the fixture server, then run:
 DEMO_MODE=live node demo/server.mjs
 ```
 
-The badge becomes **LIVE DRY QUOTES**. Address fields start empty. Enter the addresses you intend to use for quoting; those addresses and route parameters are disclosed to 1Click. B skips missing or invalid destination addresses. Provider validation failures remain visible; do not infer wallet ownership or executability from a successful response. Nothing is deposited, and no liquidity is reserved.
+The badge becomes **LIVE DRY QUOTES**. Address fields start empty. Enter the addresses you intend to use for quoting; those addresses and route parameters are disclosed to 1Click. For a NEAR refund address without a wallet, use a mainnet-format account such as the synthetic implicit account of 64 × `1`; 1Click answers `.invalid` names and the token contract `wrap.near` with an error, shown as "The quote provider is unavailable". B skips missing or invalid destination addresses. Provider validation failures remain visible; do not infer wallet ownership or executability from a successful response. Nothing is deposited, and no liquidity is reserved.
 
 | Environment variable | Default | Effect |
 |---|---|---|
