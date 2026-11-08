@@ -37,7 +37,9 @@ el('compare-form').addEventListener('submit', async event => {
     if (!response.ok) throw new Error(data.error?.message ?? 'Comparison unavailable.');
     if (current !== generation) return;
     const result = data.comparison;
-    el('best').textContent = result.best ? `Most tokens for this input: ${result.best.blockchain.toUpperCase()}.` : 'No usable quote. Check addresses and route availability.';
+    el('best').textContent = result.best ? `Most tokens for this input: ${result.best.blockchain.toUpperCase()}.`
+      : demoMode() === 'fixture' ? 'No quote in offline fixture mode: it only replays 1 NEAR or wNEAR → USDC. Set Amount to 1 in A, or run with DEMO_MODE=live.'
+      : 'No usable quote. Check addresses and route availability.';
     el('comparison-rows').replaceChildren(...result.rows.map(row => {
       const tr = document.createElement('tr');
       const values = [row.blockchain.toUpperCase(), row.status === 'ok' ? `${row.tokensOut} ${row.symbol}` : row.status === 'needs_wallet' ? 'Add wallet address' : row.status,
@@ -49,11 +51,12 @@ el('compare-form').addEventListener('submit', async event => {
       const td = document.createElement('td');
       if (row.status === 'ok') {
         const button = document.createElement('button'); button.type = 'button'; button.textContent = 'Use route in A';
-        button.addEventListener('click', () => { useDestination(row, addresses()[row.blockchain] ?? ''); invalidate(); }); td.append(button);
+        button.addEventListener('click', () => useDestination(row, addresses()[row.blockchain] ?? '')); td.append(button);
       }
       tr.append(td); return tr;
     }));
     el('comparison-result').hidden = false;
+    el('comparison-result').querySelector('.table-scroll').scrollLeft = 0;
   } catch (error) { if (current === generation) el('compare-error').textContent = error.message; }
   finally { el('compare-submit').disabled = false; }
 });

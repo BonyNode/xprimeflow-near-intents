@@ -19,7 +19,7 @@ npm test
 node demo/server.mjs
 ```
 
-You should see tests pass, with the live test skipped, followed by `Quote demo (fixture): http://127.0.0.1:8787`. Open that address. The server listens only on loopback. Stop it with Ctrl+C. Offline fixture mode replays only 1 NEAR/wNEAR → USDC at 100 bps slippage: other amounts, tokens or slippages return "Check the input format and limits." in A or "unavailable" in B; use `DEMO_MODE=live` for arbitrary dry quotes.
+You should see tests pass, with the live test skipped, followed by `Quote demo (fixture): http://127.0.0.1:8787`. Open that address. The server listens only on loopback. Stop it with Ctrl+C. Offline fixture mode replays only 1 NEAR/wNEAR → USDC at 100 bps slippage: other amounts, tokens or slippages are refused with a message saying so; use `DEMO_MODE=live` for arbitrary dry quotes.
 
 ## A: do this — see this
 

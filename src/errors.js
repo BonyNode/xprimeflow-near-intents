@@ -7,6 +7,7 @@ const messages = Object.freeze({
   comparison_unavailable: 'Choose a symbol present on at least two supported networks.',
   needs_wallet: 'Provide a connected wallet address for this network.',
   invalid_input: 'Check the input format and limits.',
+  fixture_unsupported: 'Offline fixture mode only replays 1 NEAR or wNEAR → USDC at 100 bps slippage. Run with DEMO_MODE=live for other inputs.',
   invalid_address: 'The address is invalid for the selected network.',
   unsupported_network: 'Address validation is unavailable for this network.',
   unknown_asset: 'Select an asset from the current catalog.',

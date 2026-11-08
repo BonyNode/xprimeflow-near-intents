@@ -11,7 +11,9 @@ export const routeInput = () => ({ originAsset: selected('from')?.assetId, origi
   slippageTolerance: Number(el('slippage').value) });
 export function useDestination(row, address) {
   el('to-network').value = row.blockchain; fillAssets('to', rowKey(row));
-  el('recipient').value = address; invalidate(); el('quote-form').scrollIntoView(); el('submit').focus();
+  el('recipient').value = address; invalidate();
+  el('empty').textContent = `Route loaded from B: ${row.blockchain.toUpperCase()} ${row.symbol}. Click Get dry quote to see it. Nothing will be sent.`;
+  el('quote-form').scrollIntoView(); el('submit').focus();
 }
 
 async function api(path, body) {
@@ -39,9 +41,10 @@ function units(value, decimals) {
   return digits.slice(0, -decimals) + (rest ? `.${rest}` : '');
 }
 
+const emptyText = el('empty').textContent;
 function invalidate() {
   generation++;
-  el('result').hidden = true; el('empty').hidden = false; el('error').textContent = '';
+  el('result').hidden = true; el('empty').hidden = false; el('empty').textContent = emptyText; el('error').textContent = '';
 }
 
 el('quote-form').addEventListener('input', invalidate);
@@ -49,7 +52,7 @@ for (const side of ['from', 'to']) el(`${side}-network`).addEventListener('chang
   fillAssets(side);
   const field = side === 'from' ? 'refund' : 'recipient';
   el(field).value = '';
-  el(field).placeholder = `Address on ${el(`${side}-network`).value}`;
+  el(field).placeholder = `Address on ${el(`${side}-network`).value.toUpperCase()}`;
   invalidate();
 });
 
@@ -76,9 +79,10 @@ el('quote-form').addEventListener('submit', async event => {
     el('output').textContent = `${units(q.amountOut, q.destination.decimals)} ${q.destination.symbol}`;
     el('minimum').textContent = `${units(q.minAmountOut, q.destination.decimals)} ${q.destination.symbol}`;
     el('time').textContent = `${q.timeEstimate} seconds`;
-    el('app-fee').textContent = `${q.fees.appFeeBps} bps`;
-    el('withdraw').textContent = q.fees.withdrawFee ?? 'Not provided';
-    el('refund-fee').textContent = q.fees.refundFee ?? 'Not provided';
+    el('app-fee').textContent = `${q.fees.appFeeBps} bps (${(q.fees.appFeeBps / 100).toFixed(2)}%)`;
+    // Raw provider integers in the smallest token units, shown unconverted.
+    el('withdraw').textContent = q.fees.withdrawFee == null ? 'Not provided' : `${q.fees.withdrawFee} (smallest units, unconverted)`;
+    el('refund-fee').textContent = q.fees.refundFee == null ? 'Not provided' : `${q.fees.refundFee} (smallest units, unconverted)`;
     el('catalog-match').textContent = 'Catalog match: asset ID, decimals, denomination, mode and exact input checked.';
     el('preview-note').textContent = data.preview
       ? `Illustrative target deposit.demo.invalid; never send to it. ${from.denom === 'near-native' ? 'Native NEAR: one Transfer; 1Click handles wrapping. A refund may arrive as wNEAR.' : 'Spends an existing token balance. Storage amount is an example, not a token storage query.'}`
